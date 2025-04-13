@@ -1,18 +1,22 @@
 # Import libraries
 import streamlit as st
-from pinecone import Pinecone
+import pinecone 
 from sentence_transformers import SentenceTransformer
 import os
+from pinecone import Pinecone, ServerlessSpec
+
 
 # Set up the app title
 st.title("Movie Recommendation Engine")
 st.write("Describe the type of movie you want to watch, and we'll recommend the best matches!")
 
-# Initialize Pinecone
+
 @st.cache_resource
 def init_pinecone():
     pc = Pinecone(api_key=os.getenv("pcsk_3xYAm8_3qHVaSMC7D93DqS2vTHGQNg2fDiMz9hCzcS2S68sMCXsGpdWp8DeoVgxzT8gJCK") or "pcsk_3xYAm8_3qHVaSMC7D93DqS2vTHGQNg2fDiMz9hCzcS2S68sMCXsGpdWp8DeoVgxzT8gJCK")
-    return pc.Index("imdb-movies")  
+    index = pc.Index("imdb-movies")
+    return index
+
 
 # Load the embedding model
 @st.cache_resource
